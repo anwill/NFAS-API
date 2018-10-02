@@ -6,7 +6,7 @@ use \NFAS\NFAS;
 use \Propel\Runtime\Exception\PropelException;
 
 
-require 'vendor/autoload.php';
+require '../../vendor/autoload.php';
 require_once 'generated-conf/config.php';
 
 $config['displayErrorDetails'] = true;
