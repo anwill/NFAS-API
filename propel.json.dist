@@ -1,0 +1,8 @@
+{
+    "propel": {
+        "paths": {
+            "schemaDir": "\/Users\/andy\/Documents\/NFAS-Booking-App\/nfas_booking_api",
+            "phpDir": "\/Users\/andy\/Documents\/NFAS-Booking-App\/nfas_booking_api/src/classes"
+        }
+    }
+}

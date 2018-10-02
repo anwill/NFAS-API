@@ -1,0 +1,17 @@
+{
+    "propel": {
+        "database": {
+            "connections": {
+                "default": {
+                    "adapter": "mysql",
+                    "dsn": "mysql:host=localhost;port=3306;dbname=NFAS",
+                    "user": "root",
+                    "password": "L.1x1cixo9Di",
+                    "settings": {
+                        "charset": "utf8"
+                    }
+                }
+            }
+        }
+    }
+}

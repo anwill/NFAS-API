@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" namespace="NFAS" defaultPhpNamingMethod="underscore">
+  <table name="Archer" idMethod="native" phpName="Archer" namespace="NFAS">
+    <column name="id" phpName="Id" type="VARCHAR" size="36" primaryKey="true" required="true"/>
+    <column name="booking_id" phpName="BookingId" type="VARCHAR" size="36" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="100" required="true"/>
+    <column name="class" phpName="Class" type="VARCHAR" size="10" required="true"/>
+    <column name="gender" phpName="Gender" type="VARCHAR" size="1" required="true"/>
+    <column name="age" phpName="Age" type="VARCHAR" size="20" required="true"/>
+    <column name="club" phpName="Club" type="VARCHAR" size="150" required="true"/>
+    <foreign-key foreignTable="Booking" name="fk_archer_constraint" onDelete="CASCADE">
+      <reference local="booking_id" foreign="id"/>
+    </foreign-key>
+    <index name="booking_id">
+      <index-column name="booking_id"/>
+      <index-column name="name"/>
+      <index-column name="class"/>
+      <index-column name="gender"/>
+      <index-column name="age"/>
+      <index-column name="club"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Booking" idMethod="native" phpName="Booking" namespace="NFAS">
+    <column name="id" phpName="Id" type="VARCHAR" size="36" primaryKey="true" required="true"/>
+    <column name="shoot_id" phpName="ShootId" type="VARCHAR" size="36" required="true"/>
+    <column name="shoot_together" phpName="ShootTogether" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <column name="shoot_days" phpName="ShootDays" type="VARCHAR" size="30"/>
+    <column name="permission" phpName="Permission" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <column name="booker_email" phpName="BookerEmail" type="VARCHAR" size="150" required="true"/>
+    <column name="notes" phpName="Notes" type="LONGVARCHAR" size="1000" />
+    <column name="date_booked" phpName="DateBooked" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="Shoot" name="fk_booking_constraint" onDelete="CASCADE">
+      <reference local="shoot_id" foreign="id"/>
+    </foreign-key>
+    <index name="shoot_id">
+      <index-column name="shoot_id"/>
+    </index>
+    <index name="date_booked">
+      <index-column name="date_booked"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Club" idMethod="native" phpName="Club" namespace="NFAS">
+    <column name="id" phpName="Id" type="VARCHAR" size="36" primaryKey="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="255" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="150" required="true"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="125" required="true"/>
+    <index name="email">
+      <index-column name="email"/>
+    </index>
+    <unique name="name">
+      <unique-column name="name"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Licence" idMethod="native" phpName="Licence" namespace="NFAS">
+    <column name="id" phpName="Id" type="VARCHAR" size="36" primaryKey="true" required="true"/>
+    <column name="club_id" phpName="ClubId" type="VARCHAR" size="36" required="true"/>
+    <column name="type" phpName="Type" type="VARCHAR" size="50" required="true"/>
+    <column name="start" phpName="Start" type="DATE" required="true"/>
+    <column name="end" phpName="End" type="DATE" required="true"/>
+    <foreign-key foreignTable="Club" name="fk_licence_constraint" onDelete="CASCADE">
+      <reference local="club_id" foreign="id"/>
+    </foreign-key>
+    <index name="club_id">
+      <index-column name="club_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="Shoot" idMethod="native" phpName="Shoot" namespace="NFAS">
+    <column name="id" phpName="Id" type="VARCHAR" size="36" primaryKey="true" required="true"/>
+    <column name="club_id" phpName="ClubId" type="VARCHAR" size="36" required="true"/>
+    <column name="date_start" phpName="DateStart" type="DATE" required="true"/>
+    <column name="date_end" phpName="DateEnd" type="DATE"/>
+    <column name="description" phpName="Description" type="LONGVARCHAR"/>
+    <column name="status" phpName="Status" type="VARCHAR" size="6" />
+    <foreign-key foreignTable="Club" name="fk_shoot_constraint" onDelete="CASCADE">
+      <reference local="club_id" foreign="id"/>
+    </foreign-key>
+    <index name="club_id">
+      <index-column name="club_id"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>
