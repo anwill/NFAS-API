@@ -1,12 +1,14 @@
 <?php
 
+date_default_timezone_set('Europe/London');
+
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \NFAS\NFAS;
 use \Propel\Runtime\Exception\PropelException;
 
 
-require '../../vendor/autoload.php';
+require 'vendor/autoload.php';
 require_once 'generated-conf/config.php';
 
 $config['displayErrorDetails'] = true;
@@ -29,7 +31,7 @@ $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response
         ->withHeader('Access-Control-Allow-Origin', '*')
-        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+        ->withHeader('Access-Control-Allow-Headers', 'User-Agent, Referer, X-Requested-With, Content-Type, Accept, Origin, Authorization')
         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
 });
 
@@ -161,6 +163,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
         return $response->withJson($data,400);
     }
 
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $data = array('error'=>'Invalid email');
         $this->logger->addInfo("Invalid email : " . $email);
@@ -227,7 +230,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     // Create a new booking
     $booking = new NFAS\Booking();
     $booking->setBookerEmail($email);
-    $booking->setDateBooked(date('Y-m-d %H:%M'));
+    $booking->setDateBooked(date('Y-m-d H:i'));
     $booking->setPermission(1);
     $booking->setShootTogether($shoot_together ? '1' : '0');
     $booking->setShootDays($shoot_days);
@@ -247,7 +250,30 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     }
 
     $booking->save();
-    // Send confirmation email
+
+    // Send confirmation email to Booker and to club
+    $this_shoot = NFAS\ShootQuery::create()->filterById($id)->findOne();
+    $this_club = NFAS\ClubQuery::create()->filterById($this_shoot->getClubId())->findOne();
+    $subject = "Booking for " . $this_club->getName() . " on " . $this_shoot->getDateStart();
+    $message = "----- This is an automated message. Please do not reply ----" . PHP_EOL;
+    $message .= "Club: " . $this_club->getName() . PHP_EOL;
+    $message .= "Date: " . $this_shoot->getDateStart() . PHP_EOL;
+    if ($booking->getShootDays()) {
+        $message .= "Shoot Days: " . $booking->getShootDays() . PHP_EOL;
+    }
+    $message .= "Shoot Together: " . $booking->getShootTogether() . PHP_EOL;
+    $message .= "Booker's Email: " . $email . PHP_EOL;
+    $message .= "Archers" . PHP_EOL;
+    foreach ($archers as $a) {
+        $message .= "\t" . $a['name'] . "\t" . $a['class'] . "\t" . $a['age'] . "\t" . $a['gender'] . "\t" . $a['club'] . PHP_EOL;
+    }
+
+    $additional_message = PHP_EOL . "===== This is not confirmation of acceptance to the above shoot. You will receive confirmation directly from the club =====" . PHP_EOL;
+    $club_message = PHP_EOL . "==== Please contact the above booker's email to confirm that these archers are booked into your shoot =====" . PHP_EOL;
+    $headers = 'From: no-reply@singlearrow.co.uk'. PHP_EOL ;
+    mail ( $email, $subject, $message . $additional_message, $headers ) ;
+    mail ( $email, $subject, $message . $club_message, $headers ) ;
+
 
 
 
