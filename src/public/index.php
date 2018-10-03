@@ -257,7 +257,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     $subject = "Booking for " . $this_club->getName() . " on " . date('d/m/Y', $this_shoot->getDateStart()->getTimestamp());
     $message = "----- This is an automated message. Please do not reply ----" . PHP_EOL;
     $message .= "Club: " . $this_club->getName() . PHP_EOL;
-    $message .= "Date: " . $this_shoot->getDateStart() . PHP_EOL;
+    $message .= "Date: " . date('d/m/Y', $this_shoot->getDateStart()->getTimestamp()) . PHP_EOL;
     if ($booking->getShootDays()) {
         $message .= "Shoot Days: " . $booking->getShootDays() . PHP_EOL;
     }
