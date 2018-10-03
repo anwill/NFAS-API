@@ -263,9 +263,10 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     }
     $message .= "Shoot Together: " . $booking->getShootTogether() . PHP_EOL;
     $message .= "Booker's Email: " . $email . PHP_EOL;
-    $message .= "Archers" . PHP_EOL;
+    $message .= "Notes: " . $notes . PHP_EOL;
+    $message .= "Archers: (name, class, age, gender, club)" . PHP_EOL;
     foreach ($archers as $a) {
-        $message .= "\t" . $a['name'] . "\t" . $a['class'] . "\t" . $a['age'] . "\t" . $a['gender'] . "\t" . $a['club'] . PHP_EOL;
+        $message .= "\t" . $a['name'] . ", " . $a['class'] . ", " . $a['age'] . ", " . $a['gender'] . ", " . $a['club'] . PHP_EOL;
     }
 
     $additional_message = PHP_EOL . "===== This is not confirmation of acceptance to the above shoot. You will receive confirmation directly from the club =====" . PHP_EOL;
