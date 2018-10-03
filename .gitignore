@@ -4,6 +4,4 @@ propel.json
 logs/*
 !logs/.gitkeep
 
-# To not overwrite the production config
-src/public/generated-conf/config.php
 

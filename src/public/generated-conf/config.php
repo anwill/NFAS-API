@@ -4,22 +4,22 @@ $serviceContainer->checkVersion('2.0.0-dev');
 $serviceContainer->setAdapterClass('default', 'mysql');
 $manager = new \Propel\Runtime\Connection\ConnectionManagerSingle();
 $manager->setConfiguration(array (
-  'dsn' => 'mysql:host=localhost;port=3306;dbname=NFAS',
-  'user' => 'root',
-  'password' => 'L.1x1cixo9Di',
-  'settings' =>
-  array (
-    'charset' => 'utf8',
-    'queries' =>
-    array (
-    ),
-  ),
-  'classname' => '\\Propel\\Runtime\\Connection\\ConnectionWrapper',
-  'model_paths' =>
-  array (
-    0 => 'src',
-    1 => 'vendor',
-  ),
+    'dsn' => 'mysql:host=db755499624.db.1and1.com;port=3306;dbname=db755499624',
+    'user' => 'dbo755499624',
+    'password' => 'zivfyv-6Jyvza-nendyh',
+    'settings' =>
+        array (
+            'charset' => 'utf8',
+            'queries' =>
+                array (
+                ),
+        ),
+    'classname' => '\\Propel\\Runtime\\Connection\\ConnectionWrapper',
+    'model_paths' =>
+        array (
+            0 => 'src',
+            1 => 'vendor',
+        ),
 ));
 $manager->setName('default');
 $serviceContainer->setConnectionManager('default', $manager);
