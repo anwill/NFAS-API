@@ -254,7 +254,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     // Send confirmation email to Booker and to club
     $this_shoot = NFAS\ShootQuery::create()->filterById($shoot)->findOne();
     $this_club = NFAS\ClubQuery::create()->filterById($this_shoot->getClubId())->findOne();
-    $subject = "Booking for " . $this_club->getName() . " on " . $this_shoot->getDateStart();
+    $subject = "Booking for " . $this_club->getName() . " on " . date('d/m/Y', $this_shoot->getDateStart()->getTimestamp())s;
     $message = "----- This is an automated message. Please do not reply ----" . PHP_EOL;
     $message .= "Club: " . $this_club->getName() . PHP_EOL;
     $message .= "Date: " . $this_shoot->getDateStart() . PHP_EOL;
