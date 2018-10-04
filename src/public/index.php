@@ -288,7 +288,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     $filename = '../tmp/booking_' . $shoot . '.csv';
     $fp = fopen($filename, 'w');
 
-    fputcsv($fp, ["Name","Class","Age","Gender","Club"]);
+    fputcsv($fp, ["Name","Class","Gender","Age","Club"]);
     foreach ($archers as $a) {
         fputcsv($fp, $a);
     }
