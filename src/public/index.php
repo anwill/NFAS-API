@@ -252,7 +252,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     $booking->save();
 
     // Send confirmation email to Booker and to club
-    $transport = new Swift_SendmailTransport('/usr/sbin/sendmail -bs');
+    $transport = new Swift_SendmailTransport('/usr/sbin/sendmail -t -i');
     $mailer = new Swift_Mailer($transport);
 
 
