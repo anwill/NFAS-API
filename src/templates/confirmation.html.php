@@ -128,12 +128,7 @@
                 font-size: 15px;
                 text-align: right;
             }
-            .smarttable td:before {
-                content: attr(data-label);
-                float: left;
-                font-weight: bold;
-                text-transform: uppercase;
-            }
+            
         }
     </style>
 
@@ -153,38 +148,38 @@
                 <th colspan="6">This is an automated message. Please do not reply</th>
             </tr>
             <tr>
-                <td data-label="clubName" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Club</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Club</td>
                 <td colspan="5"><?=$this->e($club_name)?></td>
             </tr>
             <tr>
-                <td data-label="shootDate" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Date</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Date</td>
                 <td colspan="5"><?=$this->e($shoot_date)?></td>
             </tr>
             <?php if ($shoot_days) { ?>
                 <tr>
-                    <td data-label="shootDays" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Shoot Days</td>
+                    <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Shoot Days</td>
                     <td colspan="5"><?=$this->e($shoot_days)?></td>
                 </tr>
             <?php } ?>
             <tr>
-                <td data-label="shootTogether" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Shoot Together</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Shoot Together</td>
                 <td colspan="5"><?=$this->e($shoot_together)?></td>
             </tr>
             <tr>
-                <td data-label="Email" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Booker's Email</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Booker's Email</td>
                 <td colspan="5"><?=$this->e($email)?></td>
             </tr>
             <tr>
-                <td data-label="Notes" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Notes</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Notes</td>
                 <td colspan="5"><?=$this->e($notes)?></td>
             </tr>
             <tr>
-                <td data-label="Archer" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Archers</td>
-                <td data-label="Archer" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Name</td>
-                <td data-label="Archer" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Class</td>
-                <td data-label="Archer" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Age</td>
-                <td data-label="Archer" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Gender</td>
-                <td data-label="Archer" valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Club</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Archers</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Name</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Class</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Age</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Gender</td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Club</td>
             </tr>
             <?php foreach ($archers as $a) { ?>
             <tr>
