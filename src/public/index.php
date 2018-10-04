@@ -258,6 +258,8 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
 
     $this_shoot = NFAS\ShootQuery::create()->filterById($shoot)->findOne();
     $this_club = NFAS\ClubQuery::create()->filterById($this_shoot->getClubId())->findOne();
+    $club_email = $this_club->getEmail();
+    $this->logger->addInfo("CLUB EMAIL : [" . $club_email . "]");
     $subject = "Booking for " . $this_club->getName() . " on " . date('d/m/Y', $this_shoot->getDateStart()->getTimestamp());
 
     $templates = new League\Plates\Engine('../templates');
@@ -284,7 +286,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
 
     $club_message = (new Swift_Message($subject))
         ->setFrom(['no-reply@singlearrow.co.uk' => 'NFAS Booking'])
-        ->setTo($this_club->getEmail())
+        ->setTo($club_email)
         ->setBody($club_text_message)
         ->addPart($club_html_message, 'text/html')
     ;
