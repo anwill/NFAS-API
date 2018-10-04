@@ -252,28 +252,45 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     $booking->save();
 
     // Send confirmation email to Booker and to club
+    $transport = new Swift_SendmailTransport('/usr/sbin/sendmail -bs');
+    $mailer = new Swift_Mailer($transport);
+
+
     $this_shoot = NFAS\ShootQuery::create()->filterById($shoot)->findOne();
     $this_club = NFAS\ClubQuery::create()->filterById($this_shoot->getClubId())->findOne();
     $subject = "Booking for " . $this_club->getName() . " on " . date('d/m/Y', $this_shoot->getDateStart()->getTimestamp());
-    $message = "----- This is an automated message. Please do not reply ----" . PHP_EOL;
-    $message .= "Club: " . $this_club->getName() . PHP_EOL;
-    $message .= "Date: " . date('d/m/Y', $this_shoot->getDateStart()->getTimestamp()) . PHP_EOL;
-    if ($booking->getShootDays()) {
-        $message .= "Shoot Days: " . $booking->getShootDays() . PHP_EOL;
-    }
-    $message .= "Shoot Together: " . $booking->getShootTogether() . PHP_EOL;
-    $message .= "Booker's Email: " . $email . PHP_EOL;
-    $message .= "Notes: " . $notes . PHP_EOL;
-    $message .= "Archers: (name, class, age, gender, club)" . PHP_EOL;
-    foreach ($archers as $a) {
-        $message .= "\t" . $a['name'] . ", " . $a['class'] . ", " . $a['age'] . ", " . $a['gender'] . ", " . $a['club'] . PHP_EOL;
-    }
 
-    $additional_message = PHP_EOL . "===== This is not confirmation of acceptance to the above shoot. You will receive confirmation directly from the club =====" . PHP_EOL;
-    $club_message = PHP_EOL . "==== Please contact the above booker's email to confirm that these archers are booked into your shoot =====" . PHP_EOL;
-    $headers = 'From: no-reply@singlearrow.co.uk'. PHP_EOL ;
-    mail ( $email, $subject, $message . $additional_message, $headers ) ;
-    mail ( $email, $subject, $message . $club_message, $headers ) ;
+    $templates = new League\Plates\Engine('../templates');
+    $details = [
+        'club_name' => $this_club->getName(),
+        'shoot_date' => date('d/m/Y', $this_shoot->getDateStart()->getTimestamp()),
+        'shoot_days' => $booking->getShootDays(),
+        'shoot_together' => $booking->getShootTogether(),
+        'email' => $email,
+        'notes' => $notes,
+        'archers' => $archers
+    ];
+    $booker_text_message = $templates->render('confirmation.txt', $details);
+    $booker_html_message = $templates->render('confirmation.html', $details);
+    $club_text_message = $templates->render('booking.txt', $details);
+    $club_html_message = $templates->render('booking.html', $details);
+
+    $booker_message = (new Swift_Message($subject))
+        ->setFrom(['no-reply@singlearrow.co.u' => 'NFAS Booking Confirmation'])
+        ->setTo([$email])
+        ->setBody($booker_text_message)
+        ->addPart($booker_html_message, 'text/html')
+    ;
+
+    $club_message = (new Swift_Message($subject))
+        ->setFrom(['no-reply@singlearrow.co.u' => 'NFAS Booking'])
+        ->setTo([$this_club->getEmail()])
+        ->setBody($club_text_message)
+        ->addPart($club_html_message, 'text/html')
+    ;
+
+    $mailer->send($booker_message);
+    $mailer->send($club_message);
 
 
 
