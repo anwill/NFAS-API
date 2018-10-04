@@ -258,7 +258,7 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
 
     $this_shoot = NFAS\ShootQuery::create()->filterById($shoot)->findOne();
     $this_club = NFAS\ClubQuery::create()->filterById($this_shoot->getClubId())->findOne();
-    $club_email = $this_club->getEmail();
+    $club_email = filter_var($this_club->getEmail(), FILTER_SANITIZE_EMAIL);
     $this->logger->addInfo("CLUB EMAIL : [" . $club_email . "]");
     $subject = "Booking for " . $this_club->getName() . " on " . date('d/m/Y', $this_shoot->getDateStart()->getTimestamp());
 
