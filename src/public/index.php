@@ -276,15 +276,15 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
     $club_html_message = $templates->render('booking.html', $details);
 
     $booker_message = (new Swift_Message($subject))
-        ->setFrom(['no-reply@singlearrow.co.u' => 'NFAS Booking Confirmation'])
-        ->setTo([$email])
+        ->setFrom(['no-reply@singlearrow.co.uk' => 'NFAS Booking Confirmation'])
+        ->setTo($email)
         ->setBody($booker_text_message)
         ->addPart($booker_html_message, 'text/html')
     ;
 
     $club_message = (new Swift_Message($subject))
-        ->setFrom(['no-reply@singlearrow.co.u' => 'NFAS Booking'])
-        ->setTo([$this_club->getEmail()])
+        ->setFrom(['no-reply@singlearrow.co.uk' => 'NFAS Booking'])
+        ->setTo($this_club->getEmail())
         ->setBody($club_text_message)
         ->addPart($club_html_message, 'text/html')
     ;
