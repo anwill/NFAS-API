@@ -128,7 +128,7 @@
                 font-size: 15px;
                 text-align: right;
             }
-            
+
         }
     </style>
 
@@ -145,33 +145,33 @@
     <div align="center">
         <table class="smarttable" width="100%" cellpadding="0" cellspacing="0" style="min-width:100%;">
             <tr>
-                <th colspan="6">This is an automated message. Please do not reply</th>
+                <th valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="6">This is an automated message. Please do not reply</th>
             </tr>
             <tr>
                 <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Club</td>
-                <td colspan="5"><?=$this->e($club_name)?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="5"><?=$this->e($club_name)?></td>
             </tr>
             <tr>
                 <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Date</td>
-                <td colspan="5"><?=$this->e($shoot_date)?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="5"><?=$this->e($shoot_date)?></td>
             </tr>
             <?php if ($shoot_days) { ?>
                 <tr>
                     <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Shoot Days</td>
-                    <td colspan="5"><?=$this->e($shoot_days)?></td>
+                    <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="5"><?=$this->e($shoot_days)?></td>
                 </tr>
             <?php } ?>
             <tr>
                 <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Shoot Together</td>
-                <td colspan="5"><?=$this->e($shoot_together)?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="5"><?=$this->e($shoot_together)?></td>
             </tr>
             <tr>
                 <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Booker's Email</td>
-                <td colspan="5"><?=$this->e($email)?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="5"><?=$this->e($email)?></td>
             </tr>
             <tr>
                 <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Notes</td>
-                <td colspan="5"><?=$this->e($notes)?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="5"><?=$this->e($notes)?></td>
             </tr>
             <tr>
                 <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;">Archers</td>
@@ -183,15 +183,15 @@
             </tr>
             <?php foreach ($archers as $a) { ?>
             <tr>
-                <td></td>
-                <td><?=$this->e($a['name'])?></td>
-                <td><?=$this->e($a['class'])?></td>
-                <td><?=$this->e($a['age'])?></td>
-                <td><?=$this->e($a['gender'])?></td>
-                <td><?=$this->e($a['club'])?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><?=$this->e($a['name'])?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><?=$this->e($a['class'])?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><?=$this->e($a['age'])?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><?=$this->e($a['gender'])?></td>
+                <td valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;"><?=$this->e($a['club'])?></td>
             <?php } ?>
             <tr>
-                <th colspan="6">This is not confirmation of acceptance to the above shoot. You will receive confirmation directly from the club</th>
+                <th valign="top" style="padding:5px; font-family: Arial,sans-serif; font-size: 16px; line-height:20px;" colspan="6">This is not confirmation of acceptance to the above shoot. You will receive confirmation directly from the club</th>
             </tr>
         </table>
 
