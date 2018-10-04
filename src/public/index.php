@@ -284,18 +284,31 @@ $app->post('/nfas_booking/save_booking', function (Request $request, Response $r
         ->addPart($booker_html_message, 'text/html')
     ;
 
+    // Create CSV
+    $filename = '../tmp/booking_' . $shoot . '.csv';
+    $fp = fopen($filename, 'w');
+
+    fputcsv($fp, ["Name","Class","Age","Gender","Club"]);
+    foreach ($archers as $a) {
+        fputcsv($fp, $a);
+    }
+    fclose($fp);
+
+    $attachment = Swift_Attachment::fromPath($filename)
+        ->setFilename('booking_' . $shoot . '.csv');
     $club_message = (new Swift_Message($subject))
         ->setFrom(['no-reply@singlearrow.co.uk' => 'NFAS Booking'])
         ->setTo($club_email)
         ->setBody($club_text_message)
         ->addPart($club_html_message, 'text/html')
+        ->attach($attachment)
     ;
 
     $mailer->send($booker_message);
     $mailer->send($club_message);
 
 
-
+    unlink($filename);
 
     return $response->withJson($data);
 });

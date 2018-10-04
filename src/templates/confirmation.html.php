@@ -41,21 +41,7 @@
         table td {
             border-collapse: collapse;
         }
-        .ExternalClass {
-            width: 100%;
-        }
-        .ExternalClass,
-        .ExternalClass p,
-        .ExternalClass span,
-        .ExternalClass font,
-        .ExternalClass td,
-        .ExternalClass div {
-            line-height: 100%;
-        }
-        /* Outermost container in Outlook.com */
-        .ReadMsgBody {
-            width: 100%;
-        }
+
         img {
             -ms-interpolation-mode: bicubic;
         }
