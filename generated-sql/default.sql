@@ -103,6 +103,9 @@ CREATE TABLE `Shoot`
     `date_end` DATE,
     `description` TEXT,
     `status` VARCHAR(6),
+    `times_round` INTEGER(2),
+    `targets` INTEGER(3),
+    `max_per_target` INTEGER(2),
     PRIMARY KEY (`id`),
     INDEX `club_id` (`club_id`),
     CONSTRAINT `fk_shoot_constraint`

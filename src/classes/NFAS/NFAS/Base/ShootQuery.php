@@ -26,6 +26,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildShootQuery orderByDateEnd($order = Criteria::ASC) Order by the date_end column
  * @method     ChildShootQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildShootQuery orderByStatus($order = Criteria::ASC) Order by the status column
+ * @method     ChildShootQuery orderByTimesRound($order = Criteria::ASC) Order by the times_round column
+ * @method     ChildShootQuery orderByTargets($order = Criteria::ASC) Order by the targets column
+ * @method     ChildShootQuery orderByMaxPerTarget($order = Criteria::ASC) Order by the max_per_target column
  *
  * @method     ChildShootQuery groupById() Group by the id column
  * @method     ChildShootQuery groupByClubId() Group by the club_id column
@@ -33,6 +36,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildShootQuery groupByDateEnd() Group by the date_end column
  * @method     ChildShootQuery groupByDescription() Group by the description column
  * @method     ChildShootQuery groupByStatus() Group by the status column
+ * @method     ChildShootQuery groupByTimesRound() Group by the times_round column
+ * @method     ChildShootQuery groupByTargets() Group by the targets column
+ * @method     ChildShootQuery groupByMaxPerTarget() Group by the max_per_target column
  *
  * @method     ChildShootQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildShootQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -72,7 +78,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildShoot findOneByDateStart(string $date_start) Return the first ChildShoot filtered by the date_start column
  * @method     ChildShoot findOneByDateEnd(string $date_end) Return the first ChildShoot filtered by the date_end column
  * @method     ChildShoot findOneByDescription(string $description) Return the first ChildShoot filtered by the description column
- * @method     ChildShoot findOneByStatus(string $status) Return the first ChildShoot filtered by the status column *
+ * @method     ChildShoot findOneByStatus(string $status) Return the first ChildShoot filtered by the status column
+ * @method     ChildShoot findOneByTimesRound(int $times_round) Return the first ChildShoot filtered by the times_round column
+ * @method     ChildShoot findOneByTargets(int $targets) Return the first ChildShoot filtered by the targets column
+ * @method     ChildShoot findOneByMaxPerTarget(int $max_per_target) Return the first ChildShoot filtered by the max_per_target column *
 
  * @method     ChildShoot requirePk($key, ConnectionInterface $con = null) Return the ChildShoot by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildShoot requireOne(ConnectionInterface $con = null) Return the first ChildShoot matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -83,6 +92,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildShoot requireOneByDateEnd(string $date_end) Return the first ChildShoot filtered by the date_end column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildShoot requireOneByDescription(string $description) Return the first ChildShoot filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildShoot requireOneByStatus(string $status) Return the first ChildShoot filtered by the status column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildShoot requireOneByTimesRound(int $times_round) Return the first ChildShoot filtered by the times_round column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildShoot requireOneByTargets(int $targets) Return the first ChildShoot filtered by the targets column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildShoot requireOneByMaxPerTarget(int $max_per_target) Return the first ChildShoot filtered by the max_per_target column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildShoot[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildShoot objects based on current ModelCriteria
  * @method     ChildShoot[]|ObjectCollection findById(string $id) Return ChildShoot objects filtered by the id column
@@ -91,6 +103,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildShoot[]|ObjectCollection findByDateEnd(string $date_end) Return ChildShoot objects filtered by the date_end column
  * @method     ChildShoot[]|ObjectCollection findByDescription(string $description) Return ChildShoot objects filtered by the description column
  * @method     ChildShoot[]|ObjectCollection findByStatus(string $status) Return ChildShoot objects filtered by the status column
+ * @method     ChildShoot[]|ObjectCollection findByTimesRound(int $times_round) Return ChildShoot objects filtered by the times_round column
+ * @method     ChildShoot[]|ObjectCollection findByTargets(int $targets) Return ChildShoot objects filtered by the targets column
+ * @method     ChildShoot[]|ObjectCollection findByMaxPerTarget(int $max_per_target) Return ChildShoot objects filtered by the max_per_target column
  * @method     ChildShoot[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -189,7 +204,7 @@ abstract class ShootQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, club_id, date_start, date_end, description, status FROM Shoot WHERE id = :p0';
+        $sql = 'SELECT id, club_id, date_start, date_end, description, status, times_round, targets, max_per_target FROM Shoot WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_STR);
@@ -463,6 +478,129 @@ abstract class ShootQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ShootTableMap::COL_STATUS, $status, $comparison);
+    }
+
+    /**
+     * Filter the query on the times_round column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTimesRound(1234); // WHERE times_round = 1234
+     * $query->filterByTimesRound(array(12, 34)); // WHERE times_round IN (12, 34)
+     * $query->filterByTimesRound(array('min' => 12)); // WHERE times_round > 12
+     * </code>
+     *
+     * @param     mixed $timesRound The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildShootQuery The current query, for fluid interface
+     */
+    public function filterByTimesRound($timesRound = null, $comparison = null)
+    {
+        if (is_array($timesRound)) {
+            $useMinMax = false;
+            if (isset($timesRound['min'])) {
+                $this->addUsingAlias(ShootTableMap::COL_TIMES_ROUND, $timesRound['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($timesRound['max'])) {
+                $this->addUsingAlias(ShootTableMap::COL_TIMES_ROUND, $timesRound['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ShootTableMap::COL_TIMES_ROUND, $timesRound, $comparison);
+    }
+
+    /**
+     * Filter the query on the targets column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByTargets(1234); // WHERE targets = 1234
+     * $query->filterByTargets(array(12, 34)); // WHERE targets IN (12, 34)
+     * $query->filterByTargets(array('min' => 12)); // WHERE targets > 12
+     * </code>
+     *
+     * @param     mixed $targets The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildShootQuery The current query, for fluid interface
+     */
+    public function filterByTargets($targets = null, $comparison = null)
+    {
+        if (is_array($targets)) {
+            $useMinMax = false;
+            if (isset($targets['min'])) {
+                $this->addUsingAlias(ShootTableMap::COL_TARGETS, $targets['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($targets['max'])) {
+                $this->addUsingAlias(ShootTableMap::COL_TARGETS, $targets['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ShootTableMap::COL_TARGETS, $targets, $comparison);
+    }
+
+    /**
+     * Filter the query on the max_per_target column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByMaxPerTarget(1234); // WHERE max_per_target = 1234
+     * $query->filterByMaxPerTarget(array(12, 34)); // WHERE max_per_target IN (12, 34)
+     * $query->filterByMaxPerTarget(array('min' => 12)); // WHERE max_per_target > 12
+     * </code>
+     *
+     * @param     mixed $maxPerTarget The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildShootQuery The current query, for fluid interface
+     */
+    public function filterByMaxPerTarget($maxPerTarget = null, $comparison = null)
+    {
+        if (is_array($maxPerTarget)) {
+            $useMinMax = false;
+            if (isset($maxPerTarget['min'])) {
+                $this->addUsingAlias(ShootTableMap::COL_MAX_PER_TARGET, $maxPerTarget['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($maxPerTarget['max'])) {
+                $this->addUsingAlias(ShootTableMap::COL_MAX_PER_TARGET, $maxPerTarget['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ShootTableMap::COL_MAX_PER_TARGET, $maxPerTarget, $comparison);
     }
 
     /**

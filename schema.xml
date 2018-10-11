@@ -83,6 +83,9 @@
     <column name="date_end" phpName="DateEnd" type="DATE"/>
     <column name="description" phpName="Description" type="LONGVARCHAR"/>
     <column name="status" phpName="Status" type="VARCHAR" size="6" />
+    <column name="times_round" phpName="TimesRound" type="INTEGER" size="2" />
+    <column name="targets" phpName="Targets" type="INTEGER" size="3" />
+    <column name="max_per_target" phpName="MaxPerTarget" type="INTEGER" size="2" />
     <foreign-key foreignTable="Club" name="fk_shoot_constraint" onDelete="CASCADE">
       <reference local="club_id" foreign="id"/>
     </foreign-key>

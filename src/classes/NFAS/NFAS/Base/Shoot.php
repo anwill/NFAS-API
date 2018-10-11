@@ -111,6 +111,27 @@ abstract class Shoot implements ActiveRecordInterface
     protected $status;
 
     /**
+     * The value for the times_round field.
+     *
+     * @var        int
+     */
+    protected $times_round;
+
+    /**
+     * The value for the targets field.
+     *
+     * @var        int
+     */
+    protected $targets;
+
+    /**
+     * The value for the max_per_target field.
+     *
+     * @var        int
+     */
+    protected $max_per_target;
+
+    /**
      * @var        ChildClub
      */
     protected $aClub;
@@ -441,6 +462,36 @@ abstract class Shoot implements ActiveRecordInterface
     }
 
     /**
+     * Get the [times_round] column value.
+     *
+     * @return int
+     */
+    public function getTimesRound()
+    {
+        return $this->times_round;
+    }
+
+    /**
+     * Get the [targets] column value.
+     *
+     * @return int
+     */
+    public function getTargets()
+    {
+        return $this->targets;
+    }
+
+    /**
+     * Get the [max_per_target] column value.
+     *
+     * @return int
+     */
+    public function getMaxPerTarget()
+    {
+        return $this->max_per_target;
+    }
+
+    /**
      * Set the value of [id] column.
      *
      * @param string $v new value
@@ -565,6 +616,66 @@ abstract class Shoot implements ActiveRecordInterface
     } // setStatus()
 
     /**
+     * Set the value of [times_round] column.
+     *
+     * @param int $v new value
+     * @return $this|\NFAS\NFAS\Shoot The current object (for fluent API support)
+     */
+    public function setTimesRound($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->times_round !== $v) {
+            $this->times_round = $v;
+            $this->modifiedColumns[ShootTableMap::COL_TIMES_ROUND] = true;
+        }
+
+        return $this;
+    } // setTimesRound()
+
+    /**
+     * Set the value of [targets] column.
+     *
+     * @param int $v new value
+     * @return $this|\NFAS\NFAS\Shoot The current object (for fluent API support)
+     */
+    public function setTargets($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->targets !== $v) {
+            $this->targets = $v;
+            $this->modifiedColumns[ShootTableMap::COL_TARGETS] = true;
+        }
+
+        return $this;
+    } // setTargets()
+
+    /**
+     * Set the value of [max_per_target] column.
+     *
+     * @param int $v new value
+     * @return $this|\NFAS\NFAS\Shoot The current object (for fluent API support)
+     */
+    public function setMaxPerTarget($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->max_per_target !== $v) {
+            $this->max_per_target = $v;
+            $this->modifiedColumns[ShootTableMap::COL_MAX_PER_TARGET] = true;
+        }
+
+        return $this;
+    } // setMaxPerTarget()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -623,6 +734,15 @@ abstract class Shoot implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ShootTableMap::translateFieldName('Status', TableMap::TYPE_PHPNAME, $indexType)];
             $this->status = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ShootTableMap::translateFieldName('TimesRound', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->times_round = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : ShootTableMap::translateFieldName('Targets', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->targets = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : ShootTableMap::translateFieldName('MaxPerTarget', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->max_per_target = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -631,7 +751,7 @@ abstract class Shoot implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = ShootTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = ShootTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\NFAS\\NFAS\\Shoot'), 0, $e);
@@ -881,6 +1001,15 @@ abstract class Shoot implements ActiveRecordInterface
         if ($this->isColumnModified(ShootTableMap::COL_STATUS)) {
             $modifiedColumns[':p' . $index++]  = 'status';
         }
+        if ($this->isColumnModified(ShootTableMap::COL_TIMES_ROUND)) {
+            $modifiedColumns[':p' . $index++]  = 'times_round';
+        }
+        if ($this->isColumnModified(ShootTableMap::COL_TARGETS)) {
+            $modifiedColumns[':p' . $index++]  = 'targets';
+        }
+        if ($this->isColumnModified(ShootTableMap::COL_MAX_PER_TARGET)) {
+            $modifiedColumns[':p' . $index++]  = 'max_per_target';
+        }
 
         $sql = sprintf(
             'INSERT INTO Shoot (%s) VALUES (%s)',
@@ -909,6 +1038,15 @@ abstract class Shoot implements ActiveRecordInterface
                         break;
                     case 'status':
                         $stmt->bindValue($identifier, $this->status, PDO::PARAM_STR);
+                        break;
+                    case 'times_round':
+                        $stmt->bindValue($identifier, $this->times_round, PDO::PARAM_INT);
+                        break;
+                    case 'targets':
+                        $stmt->bindValue($identifier, $this->targets, PDO::PARAM_INT);
+                        break;
+                    case 'max_per_target':
+                        $stmt->bindValue($identifier, $this->max_per_target, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -983,6 +1121,15 @@ abstract class Shoot implements ActiveRecordInterface
             case 5:
                 return $this->getStatus();
                 break;
+            case 6:
+                return $this->getTimesRound();
+                break;
+            case 7:
+                return $this->getTargets();
+                break;
+            case 8:
+                return $this->getMaxPerTarget();
+                break;
             default:
                 return null;
                 break;
@@ -1019,6 +1166,9 @@ abstract class Shoot implements ActiveRecordInterface
             $keys[3] => $this->getDateEnd(),
             $keys[4] => $this->getDescription(),
             $keys[5] => $this->getStatus(),
+            $keys[6] => $this->getTimesRound(),
+            $keys[7] => $this->getTargets(),
+            $keys[8] => $this->getMaxPerTarget(),
         );
         if ($result[$keys[2]] instanceof \DateTimeInterface) {
             $result[$keys[2]] = $result[$keys[2]]->format('c');
@@ -1116,6 +1266,15 @@ abstract class Shoot implements ActiveRecordInterface
             case 5:
                 $this->setStatus($value);
                 break;
+            case 6:
+                $this->setTimesRound($value);
+                break;
+            case 7:
+                $this->setTargets($value);
+                break;
+            case 8:
+                $this->setMaxPerTarget($value);
+                break;
         } // switch()
 
         return $this;
@@ -1159,6 +1318,15 @@ abstract class Shoot implements ActiveRecordInterface
         }
         if (array_key_exists($keys[5], $arr)) {
             $this->setStatus($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setTimesRound($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setTargets($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setMaxPerTarget($arr[$keys[8]]);
         }
     }
 
@@ -1218,6 +1386,15 @@ abstract class Shoot implements ActiveRecordInterface
         }
         if ($this->isColumnModified(ShootTableMap::COL_STATUS)) {
             $criteria->add(ShootTableMap::COL_STATUS, $this->status);
+        }
+        if ($this->isColumnModified(ShootTableMap::COL_TIMES_ROUND)) {
+            $criteria->add(ShootTableMap::COL_TIMES_ROUND, $this->times_round);
+        }
+        if ($this->isColumnModified(ShootTableMap::COL_TARGETS)) {
+            $criteria->add(ShootTableMap::COL_TARGETS, $this->targets);
+        }
+        if ($this->isColumnModified(ShootTableMap::COL_MAX_PER_TARGET)) {
+            $criteria->add(ShootTableMap::COL_MAX_PER_TARGET, $this->max_per_target);
         }
 
         return $criteria;
@@ -1311,6 +1488,9 @@ abstract class Shoot implements ActiveRecordInterface
         $copyObj->setDateEnd($this->getDateEnd());
         $copyObj->setDescription($this->getDescription());
         $copyObj->setStatus($this->getStatus());
+        $copyObj->setTimesRound($this->getTimesRound());
+        $copyObj->setTargets($this->getTargets());
+        $copyObj->setMaxPerTarget($this->getMaxPerTarget());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1661,6 +1841,9 @@ abstract class Shoot implements ActiveRecordInterface
         $this->date_end = null;
         $this->description = null;
         $this->status = null;
+        $this->times_round = null;
+        $this->targets = null;
+        $this->max_per_target = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();

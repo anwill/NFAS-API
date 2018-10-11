@@ -59,7 +59,7 @@ class ShootTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 9;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class ShootTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 9;
 
     /**
      * the column name for the id field
@@ -102,6 +102,21 @@ class ShootTableMap extends TableMap
     const COL_STATUS = 'Shoot.status';
 
     /**
+     * the column name for the times_round field
+     */
+    const COL_TIMES_ROUND = 'Shoot.times_round';
+
+    /**
+     * the column name for the targets field
+     */
+    const COL_TARGETS = 'Shoot.targets';
+
+    /**
+     * the column name for the max_per_target field
+     */
+    const COL_MAX_PER_TARGET = 'Shoot.max_per_target';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -113,11 +128,11 @@ class ShootTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'ClubId', 'DateStart', 'DateEnd', 'Description', 'Status', ),
-        self::TYPE_CAMELNAME     => array('id', 'clubId', 'dateStart', 'dateEnd', 'description', 'status', ),
-        self::TYPE_COLNAME       => array(ShootTableMap::COL_ID, ShootTableMap::COL_CLUB_ID, ShootTableMap::COL_DATE_START, ShootTableMap::COL_DATE_END, ShootTableMap::COL_DESCRIPTION, ShootTableMap::COL_STATUS, ),
-        self::TYPE_FIELDNAME     => array('id', 'club_id', 'date_start', 'date_end', 'description', 'status', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id', 'ClubId', 'DateStart', 'DateEnd', 'Description', 'Status', 'TimesRound', 'Targets', 'MaxPerTarget', ),
+        self::TYPE_CAMELNAME     => array('id', 'clubId', 'dateStart', 'dateEnd', 'description', 'status', 'timesRound', 'targets', 'maxPerTarget', ),
+        self::TYPE_COLNAME       => array(ShootTableMap::COL_ID, ShootTableMap::COL_CLUB_ID, ShootTableMap::COL_DATE_START, ShootTableMap::COL_DATE_END, ShootTableMap::COL_DESCRIPTION, ShootTableMap::COL_STATUS, ShootTableMap::COL_TIMES_ROUND, ShootTableMap::COL_TARGETS, ShootTableMap::COL_MAX_PER_TARGET, ),
+        self::TYPE_FIELDNAME     => array('id', 'club_id', 'date_start', 'date_end', 'description', 'status', 'times_round', 'targets', 'max_per_target', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -127,11 +142,11 @@ class ShootTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'ClubId' => 1, 'DateStart' => 2, 'DateEnd' => 3, 'Description' => 4, 'Status' => 5, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'clubId' => 1, 'dateStart' => 2, 'dateEnd' => 3, 'description' => 4, 'status' => 5, ),
-        self::TYPE_COLNAME       => array(ShootTableMap::COL_ID => 0, ShootTableMap::COL_CLUB_ID => 1, ShootTableMap::COL_DATE_START => 2, ShootTableMap::COL_DATE_END => 3, ShootTableMap::COL_DESCRIPTION => 4, ShootTableMap::COL_STATUS => 5, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'club_id' => 1, 'date_start' => 2, 'date_end' => 3, 'description' => 4, 'status' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'ClubId' => 1, 'DateStart' => 2, 'DateEnd' => 3, 'Description' => 4, 'Status' => 5, 'TimesRound' => 6, 'Targets' => 7, 'MaxPerTarget' => 8, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'clubId' => 1, 'dateStart' => 2, 'dateEnd' => 3, 'description' => 4, 'status' => 5, 'timesRound' => 6, 'targets' => 7, 'maxPerTarget' => 8, ),
+        self::TYPE_COLNAME       => array(ShootTableMap::COL_ID => 0, ShootTableMap::COL_CLUB_ID => 1, ShootTableMap::COL_DATE_START => 2, ShootTableMap::COL_DATE_END => 3, ShootTableMap::COL_DESCRIPTION => 4, ShootTableMap::COL_STATUS => 5, ShootTableMap::COL_TIMES_ROUND => 6, ShootTableMap::COL_TARGETS => 7, ShootTableMap::COL_MAX_PER_TARGET => 8, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'club_id' => 1, 'date_start' => 2, 'date_end' => 3, 'description' => 4, 'status' => 5, 'times_round' => 6, 'targets' => 7, 'max_per_target' => 8, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, )
     );
 
     /**
@@ -157,6 +172,9 @@ class ShootTableMap extends TableMap
         $this->addColumn('date_end', 'DateEnd', 'DATE', false, null, null);
         $this->addColumn('description', 'Description', 'LONGVARCHAR', false, null, null);
         $this->addColumn('status', 'Status', 'VARCHAR', false, 6, null);
+        $this->addColumn('times_round', 'TimesRound', 'INTEGER', false, 2, null);
+        $this->addColumn('targets', 'Targets', 'INTEGER', false, 3, null);
+        $this->addColumn('max_per_target', 'MaxPerTarget', 'INTEGER', false, 2, null);
     } // initialize()
 
     /**
@@ -336,6 +354,9 @@ class ShootTableMap extends TableMap
             $criteria->addSelectColumn(ShootTableMap::COL_DATE_END);
             $criteria->addSelectColumn(ShootTableMap::COL_DESCRIPTION);
             $criteria->addSelectColumn(ShootTableMap::COL_STATUS);
+            $criteria->addSelectColumn(ShootTableMap::COL_TIMES_ROUND);
+            $criteria->addSelectColumn(ShootTableMap::COL_TARGETS);
+            $criteria->addSelectColumn(ShootTableMap::COL_MAX_PER_TARGET);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.club_id');
@@ -343,6 +364,9 @@ class ShootTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.date_end');
             $criteria->addSelectColumn($alias . '.description');
             $criteria->addSelectColumn($alias . '.status');
+            $criteria->addSelectColumn($alias . '.times_round');
+            $criteria->addSelectColumn($alias . '.targets');
+            $criteria->addSelectColumn($alias . '.max_per_target');
         }
     }
 
