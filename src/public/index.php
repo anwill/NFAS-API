@@ -80,7 +80,10 @@ $app->post('/nfas_booking/get_shoot', function (Request $request, Response $resp
                     "id" => "$passed_shoot_id",
                     "dateFrom" => $from,
                     "dateTo" => $to,
-                    "location" => $club->getName());
+                    "location" => $club->getName(),
+                    "times_round" => $this_shoot->getTimesRound(),
+                    "num_targets" => $this_shoot->getTargets(),
+                    "max_per_target" => $this_shoot->getMaxPerTarget());
 
                 return $response->withJson($data);
             } else {
